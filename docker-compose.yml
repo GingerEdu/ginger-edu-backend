@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:alpine
+  celery:
+    build: .
+    command: celery -A tell_all worker -l info
+    volumes:
+      - .:/tell_all
+    environment:
+      - BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+  celery_beat:
+    build: .
+    command: celery -A tell_all beat -l info
+    volumes:
+      - .:/tell_all
+    depends_on:
+      - redis
+  db:
+    image: postgres
+    volumes:
+      - data_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=tell_all
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5432:5432"
+  django_server:
+    restart: always
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/tell_all
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=tell_all
+      - DB_USER=postgres
+      - DB_PASSWORD=pass
+      - DB_HOST=db
+      - ALLOWED_HOSTS=0.0.0.0
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  data_volume:
