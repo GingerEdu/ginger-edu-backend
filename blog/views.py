@@ -44,7 +44,7 @@ class AllPostListApiView(ListAPIView):
     permission_classes = [IsAuthenticatedAdmin]
     serializer_class = PostListSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_fields = ('tags__name', 'status', 'type', 'pub_date', )
+    filterset_fields = ('tags__name', 'status', 'pub_date', )
     search_fields = ('title', 'slug', )
 
     def list(self, request, *args, **kwargs):
@@ -115,7 +115,7 @@ class PostListApiView(ListAPIView):
     """
     serializer_class = PostListSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_fields = ('tags__name', 'status', 'type', 'pub_date', )
+    filterset_fields = ('tags__name', 'status', 'pub_date', )
     search_fields = ('title', 'slug', )
 
     def list(self, request, *args, **kwargs):

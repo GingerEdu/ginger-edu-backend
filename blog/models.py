@@ -10,11 +10,6 @@ STATUS = (
     ("published", "Published"),
 )
 
-TYPES = (
-    ("freemium", "Freemium"),
-    ("premium", "Premium"),
-)
-
 
 class DraftManager(models.Manager):
     def get_queryset(self):
@@ -55,7 +50,6 @@ class Post(BaseModel):
     body = models.TextField(null=True, blank=True)
     cover_picture = models.ImageField(upload_to='cover-picture/', max_length=100, null=True)
     status = models.CharField(choices=STATUS, default="draft", max_length=20)
-    type = models.CharField(choices=TYPES, default="freemium", max_length=20)
     pub_date = models.DateField(null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     tags = models.ManyToManyField(Tags, blank=True)

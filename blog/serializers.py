@@ -13,7 +13,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'summary', 'body', 'cover_picture', 'type',
+        fields = ['title', 'summary', 'body', 'cover_picture',
                   'pub_date', 'tags']
 
     def validate_title(self, title):
@@ -37,7 +37,7 @@ class PostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['title', 'slug', 'summary', 'cover_picture', 'author_email_address',
-                  'status', 'type', 'tags']
+                  'status', 'tags']
 
 
 class PostEditSerializer(serializers.ModelSerializer):
@@ -50,7 +50,7 @@ class PostEditSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['summary', 'body', 'cover_picture', 'type', 'pub_date', 'tags']
+        fields = ['summary', 'body', 'cover_picture', 'pub_date', 'tags']
 
     def validate_title(self, title):
         if Post.published_objects.filter(title=title).exists():
