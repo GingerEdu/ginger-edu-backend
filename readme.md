@@ -1,4 +1,4 @@
-# Tell-All API
+# GingerEdu Backend
 
 # View Postman Documentation [here](https://documenter.getpostman.com/view/9282395/Uz5Njt54)
 
